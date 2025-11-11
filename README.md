@@ -1,1 +1,1 @@
-# Gayatri-collection 
+# Gayatri-shop
