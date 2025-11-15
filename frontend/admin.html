@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel - Gayatri Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* Header Styles */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 25px 40px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #333;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      background: rgba(30, 60, 114, 0.1);
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    nav a:hover {
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(30, 60, 114, 0.4);
+    }
+
+    nav a:hover::before {
+      left: 0;
+    }
+
+    /* Main Content */
+    #adminContent {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .info-box {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-left: 5px solid #2a5298;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .info-box strong {
+      font-size: 18px;
+      color: #1e3c72;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .info-box br {
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: white;
+      text-align: center;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.6s ease-out 0.2s both;
+    }
+
+    /* Form Styles */
+    form {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.6s ease-out 0.4s both;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 15px 20px;
+      font-size: 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #2a5298;
+      box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+      transform: translateY(-2px);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #999;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(40, 167, 69, 0.4);
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(40, 167, 69, 0.6);
+      background: linear-gradient(135deg, #218838 0%, #1ea080 100%);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    /* Message Styles */
+    #message {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 15px;
+      animation: fadeInUp 0.5s ease-out;
+      backdrop-filter: blur(10px);
+    }
+
+    #message[style*="display: block"] {
+      display: block !important;
+    }
+
+    /* Warning Box */
+    .warning-box {
+      background: rgba(255, 243, 205, 0.95);
+      backdrop-filter: blur(10px);
+      border: 2px solid #ffc107;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      color: #856404;
+      animation: fadeInUp 0.6s ease-out;
+      box-shadow: 0 5px 20px rgba(255, 193, 7, 0.3);
+    }
+
+    .warning-box strong {
+      font-size: 18px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .warning-box a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .warning-box a:hover {
+      background: rgba(0, 123, 255, 0.1);
+      transform: scale(1.05);
+    }
+
+    .warning-box code {
+      background: rgba(0, 0, 0, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Access Denied */
+    .access-denied {
+      text-align: center;
+      padding: 60px 40px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .access-denied a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(0, 123, 255, 0.4);
+    }
+
+    .access-denied a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 123, 255, 0.6);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        padding: 20px;
+      }
+
+      header h1 {
+        font-size: 24px;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      #adminContent {
+        margin: 20px auto;
+      }
+
+      form {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+
+    /* Success/Error message styling */
+    .message-success {
+      background: rgba(212, 237, 218, 0.95) !important;
+      color: #155724 !important;
+      border: 2px solid #c3e6cb !important;
+    }
+
+    .message-error {
+      background: rgba(248, 215, 218, 0.95) !important;
+      color: #721c24 !important;
+      border: 2px solid #f5c6cb !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✨ Gayatri Collection - Admin Panel</h1>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="login.html">🔐 Login</a>
+      <a href="cart.html">🛒 Cart</a>
+      <a href="admin.html">⚙️ Admin Panel</a>
+    </nav>
+  </header>
+
+  <div id="adminContent">
+    <div class="info-box">
+      <strong>📝 Admin Panel</strong>
+      Use this form to add new products to your store. All fields are required.
+    </div>
+
+    <h1>Add New Product</h1>
+    
+    <form id="productForm">
+      <input type="text" name="name" placeholder="📦 Product Name (e.g., Men's Cotton Shirt)" required />
+      <input type="text" name="image" placeholder="🖼️ Image URL (e.g., https://images.unsplash.com/photo-...)" required />
+      <input type="number" name="price" placeholder="💰 Price (₹) - Enter numbers only" required min="1" />
+      <input type="text" name="category" placeholder="🏷️ Category (e.g., Men, Women, Kids)" required />
+      <textarea name="description" placeholder="📝 Product Description" rows="4" required></textarea>
+      <button type="submit">➕ Add Product</button>
+    </form>
+
+    <div id="message" style="display: none;"></div>
+  </div>
+
+  <script src="api.js"></script>
+  <script>
+    // Check if user is admin
+    const user = getUser();
+    const messageDiv = document.getElementById("message");
+    
+    // Show warning if not admin, but still show the form
+    if (!user || user.role !== "admin") {
+      const warningBox = document.createElement("div");
+      warningBox.className = "warning-box";
+      warningBox.innerHTML = `
+        <strong>⚠️ Admin Access Required</strong>
+        You need to login as an admin to add products. 
+        <a href="login.html">Login here</a>
+        <br><br>
+        <small>If you just registered, run: <code>cd Gayatri-shop/backend && node createAdmin.js YOUR_EMAIL</code></small>
+      `;
+      document.getElementById("adminContent").insertBefore(warningBox, document.getElementById("adminContent").firstChild);
+    }
+
+    const form = document.getElementById("productForm");
+
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        messageDiv.style.display = "none";
+
+        // Check authentication before submitting
+        const currentUser = getUser();
+        if (!currentUser || currentUser.role !== "admin") {
+          messageDiv.style.display = "block";
+          messageDiv.className = "message-error";
+          messageDiv.innerHTML = "❌ <strong>Access Denied:</strong> You must be logged in as an admin to add products. <a href='login.html' style='color: #721c24; text-decoration: underline; font-weight: 600;'>Login here</a>";
+          messageDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          return;
+        }
+
+        const productData = {
+          name: form.name.value,
+          image: form.image.value,
+          price: parseFloat(form.price.value),
+          originalPrice: parseFloat(form.price.value) * 1.2, // 20% markup as MRP
+          category: form.category.value,
+          description: form.description.value,
+          stock: 100, // Default stock
+          isActive: true,
+        };
+
+        console.log("📤 Sending:", productData);
+
+        try {
+          const token = getToken();
+          if (!token) {
+            throw new Error("Please login first");
+          }
+
+          const res = await fetch("http://localhost:5000/api/products", {
+            method: "POST",
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(productData),
+          });
+
+          const result = await res.json();
+          if (res.ok) {
+            console.log("✅ Server Response:", result);
+            messageDiv.style.display = "block";
+            messageDiv.className = "message-success";
+            messageDiv.innerHTML = "✅ <strong>Product added successfully!</strong> You can add another product or view it on the <a href='index.html' style='color: #155724; text-decoration: underline; font-weight: 600;'>homepage</a>.";
+            form.reset();
+            
+            // Scroll to message
+            messageDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          } else {
+            throw new Error(result.error || "Failed to add product");
+          }
+        } catch (err) {
+          console.error("❌ Error:", err);
+          messageDiv.style.display = "block";
+          messageDiv.className = "message-error";
+          messageDiv.innerHTML = "❌ <strong>Error:</strong> " + err.message;
+          messageDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gayatri Collection</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Header Styles */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+    }
+
+    nav a {
+      color: #333;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    nav a:hover {
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    nav a:hover::before {
+      left: 0;
+    }
+
+    /* Banner Styles */
+    .banner {
+      width: 100%;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+      margin: 20px 0;
+      border-radius: 0 0 50px 50px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      animation: zoomIn 15s ease-in-out infinite alternate;
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.1);
+      }
+    }
+
+    .banner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.7) 0%, rgba(118, 75, 162, 0.7) 100%);
+    }
+
+    /* Categories Section */
+    .categories {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .categories h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: white;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .category-list {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .category-list a {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      color: #333;
+      font-size: 20px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category-list a::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s ease, height 0.5s ease;
+      z-index: -1;
+    }
+
+    .category-list a:hover {
+      color: white;
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    .category-list a:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    /* Featured Products Section */
+    .featured {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    .featured h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: white;
+      text-align: center;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    #featured-products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 20px 0;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 20px;
+      transition: all 0.4s ease;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      transform: rotate(45deg);
+      transition: all 0.5s ease;
+      opacity: 0;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+    }
+
+    .product-card:hover::before {
+      opacity: 1;
+      top: -100%;
+      left: -100%;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .product-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 10px;
+      min-height: 50px;
+    }
+
+    .product-card button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .product-card button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Price styling */
+    .product-card strong {
+      color: #e74c3c;
+      font-size: 20px;
+    }
+
+    /* Loading animation */
+    #featured-products:empty::before {
+      content: '⏳ Loading products...';
+      display: block;
+      text-align: center;
+      color: white;
+      font-size: 24px;
+      padding: 40px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+      }
+
+      header h1 {
+        font-size: 24px;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .banner {
+        height: 300px;
+      }
+
+      .categories h2,
+      .featured h2 {
+        font-size: 32px;
+      }
+
+      #featured-products {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✨ Gayatri Collection</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+      <a href="cart.html">Cart</a>
+      <a href="admin.html">Admin Panel</a>
+    </nav>
+  </header>
+
+  <section class="banner">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFeKAzTDvR_bB6Rwt4ui4IVsGbO1n52FbA6g&s" alt="Banner" />
+  </section>
+
+  <section class="categories">
+    <h2>Shop by Category</h2>
+    <div class="category-list">
+      <a href="product.html?category=men">👔 Men</a>
+      <a href="product.html?category=women">👗 Women</a>
+      <a href="product.html?category=kids">👶 Kids</a>
+    </div>
+  </section>
+
+  <section class="featured">
+    <h2>Featured Products</h2>
+    <div id="featured-products">⏳ Loading products...</div>
+  </section>
+
+  <script src="api.js"></script>
+  <script>
+    async function loadFeaturedProducts() {
+      const container = document.getElementById("featured-products");
+      container.innerHTML = "⏳ Loading products...";
+
+      try {
+        console.log("📡 Fetching products from backend...");
+        const products = await productAPI.getAll({ limit: 12 });
+
+        if (!Array.isArray(products) || products.length === 0) {
+          container.innerHTML = "<p>❗ No products found. Add some products from the admin panel!</p>";
+          return;
+        }
+
+        container.innerHTML = "";
+
+        products.forEach(p => {
+          const card = document.createElement("div");
+          card.className = "product-card";
+          card.style.cursor = "pointer";
+          card.onclick = () => window.location.href = `product.html?id=${p._id}`;
+          
+          const price = p.displayPrice || p.price;
+          const originalPrice = p.originalPrice;
+          const discount = p.discountPercentage || 0;
+          
+          card.innerHTML = `
+            <img src="${p.image}" alt="${p.name}" />
+            <h3>${p.name}</h3>
+            <div style="margin: 10px 0;">
+              ${originalPrice && originalPrice > price ? `<span style="text-decoration: line-through; color: #999; margin-right: 8px; font-size: 14px;">₹${originalPrice}</span>` : ''}
+              <strong style="color: #e74c3c; font-size: 20px;">₹${price}</strong>
+              ${discount > 0 ? `<span style="color: #27ae60; margin-left: 8px; font-weight: 600; background: #d4edda; padding: 2px 8px; border-radius: 5px; font-size: 12px;">${discount}% OFF</span>` : ''}
+            </div>
+            <p style="color: #666; font-size: 13px; font-weight: 500; margin-bottom: 10px;">${p.category}</p>
+            <button onclick="event.stopPropagation(); addToCart('${p._id}')">🛒 Add to Cart</button>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error("❌ Failed to load products:", err);
+        container.innerHTML = `<p style="color:red">❌ Failed to load products. Is your <b>backend</b> running on <code>localhost:5000</code>?</p>`;
+      }
+    }
+
+    async function addToCart(productId) {
+      const user = getUser();
+      if (!user) {
+        alert("Please login to add items to cart");
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        await cartAPI.add(productId, 1);
+        alert("Product added to cart!");
+      } catch (error) {
+        alert(error.message || "Failed to add to cart");
+      }
+    }
+
+    loadFeaturedProducts();
+  </script>
+</body>
+</html>

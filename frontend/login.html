@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Gayatri Collection</title>
+  <link rel="stylesheet" href="login.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated background shapes */
+    body::before,
+    body::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    body::before {
+      top: -250px;
+      left: -250px;
+      animation-delay: 0s;
+    }
+
+    body::after {
+      bottom: -250px;
+      right: -250px;
+      animation-delay: 10s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      50% {
+        transform: translate(50px, 50px) scale(1.1);
+      }
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      padding: 50px 40px;
+      border-radius: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      animation: slideUp 0.6s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-form {
+      width: 100%;
+    }
+
+    .login-form h2 {
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 10px;
+      font-size: 36px;
+      color: white;
+      font-weight: 700;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-form p {
+      margin-bottom: 30px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+    }
+
+    .login-form input,
+    .login-form select {
+      width: 100%;
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      font-size: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .login-form input:focus,
+    .login-form select:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.8);
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-form input::placeholder {
+      color: #999;
+    }
+
+    .login-form button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(238, 90, 111, 0.4);
+      margin-top: 10px;
+    }
+
+    .login-form button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(238, 90, 111, 0.6);
+      background: linear-gradient(135deg, #ff5252 0%, #e91e63 100%);
+    }
+
+    .login-form button:active {
+      transform: translateY(-1px);
+    }
+
+    #error-message,
+    #register-error {
+      background: rgba(255, 0, 0, 0.2);
+      color: #ffebee;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 0, 0, 0.3);
+      font-size: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .signup-text {
+      margin-top: 20px;
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .signup-text a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .signup-text a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    /* Form transition animation */
+    .login-form {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .login-container {
+        padding: 40px 30px;
+        margin: 20px;
+        border-radius: 20px;
+      }
+
+      .login-form h2 {
+        font-size: 28px;
+      }
+
+      body::before,
+      body::after {
+        width: 300px;
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <form class="login-form" id="loginForm">
+      <h2>Welcome Back</h2>
+      <p>Please login to your account</p>
+      <div id="error-message" style="display: none;"></div>
+      <input type="email" id="email" placeholder="📧 Email" required />
+      <input type="password" id="password" placeholder="🔒 Password" required />
+      <button type="submit">Login</button>
+      <p class="signup-text">Don't have an account? <a href="#" onclick="showRegister(); return false;">Sign up</a></p>
+    </form>
+
+    <form class="login-form" id="registerForm" style="display: none;">
+      <h2>Create Account</h2>
+      <p>Sign up to start shopping</p>
+      <div id="register-error" style="display: none;"></div>
+      <input type="text" id="reg-name" placeholder="👤 Full Name" required />
+      <input type="email" id="reg-email" placeholder="📧 Email" required />
+      <input type="password" id="reg-password" placeholder="🔒 Password" required />
+      <input type="tel" id="reg-phone" placeholder="📱 Phone (optional)" />
+      <select id="reg-role">
+        <option value="customer">Customer</option>
+        <option value="reseller">Reseller</option>
+      </select>
+      <button type="submit">Sign Up</button>
+      <p class="signup-text">Already have an account? <a href="#" onclick="showLogin(); return false;">Login</a></p>
+    </form>
+  </div>
+
+  <script src="api.js"></script>
+  <script>
+    function showRegister() {
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
+      loginForm.style.animation = "fadeOut 0.3s ease-out";
+      setTimeout(() => {
+        loginForm.style.display = "none";
+        registerForm.style.display = "block";
+        registerForm.style.animation = "fadeIn 0.5s ease-out";
+      }, 300);
+    }
+
+    function showLogin() {
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
+      registerForm.style.animation = "fadeOut 0.3s ease-out";
+      setTimeout(() => {
+        registerForm.style.display = "none";
+        loginForm.style.display = "block";
+        loginForm.style.animation = "fadeIn 0.5s ease-out";
+      }, 300);
+    }
+
+    // Login form handler
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const errorDiv = document.getElementById("error-message");
+      errorDiv.style.display = "none";
+
+      try {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (!email || !password) {
+          errorDiv.textContent = "Please enter both email and password";
+          errorDiv.style.display = "block";
+          return;
+        }
+
+        const result = await authAPI.login(email, password);
+        alert("Login successful! Welcome " + result.user.name);
+        window.location.href = "index.html";
+      } catch (error) {
+        console.error("Login error:", error);
+        let errorMessage = "Login failed";
+        
+        if (error.message === "Failed to fetch" || error.message.includes("fetch")) {
+          errorMessage = "Cannot connect to server. Please make sure the backend is running on http://localhost:5000";
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
+        errorDiv.textContent = errorMessage;
+        errorDiv.style.display = "block";
+      }
+    });
+
+    // Register form handler
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const errorDiv = document.getElementById("register-error");
+      errorDiv.style.display = "none";
+
+      try {
+        const userData = {
+          name: document.getElementById("reg-name").value,
+          email: document.getElementById("reg-email").value,
+          password: document.getElementById("reg-password").value,
+          phone: document.getElementById("reg-phone").value,
+          role: document.getElementById("reg-role").value,
+        };
+
+        if (!userData.name || !userData.email || !userData.password) {
+          errorDiv.textContent = "Please fill in all required fields";
+          errorDiv.style.display = "block";
+          return;
+        }
+
+        const result = await authAPI.register(userData);
+        alert("Registration successful! Welcome " + result.user.name);
+        window.location.href = "index.html";
+      } catch (error) {
+        console.error("Registration error:", error);
+        let errorMessage = "Registration failed";
+        
+        if (error.message === "Failed to fetch" || error.message.includes("fetch")) {
+          errorMessage = "Cannot connect to server. Please make sure the backend is running on http://localhost:5000";
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
+        errorDiv.textContent = errorMessage;
+        errorDiv.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
